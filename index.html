@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#05060f" />
+  <title>Star Explorer — Map the Night Sky</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- ============ SKY SCREEN ============ -->
+  <main id="sky-screen" class="screen active">
+    <header class="topbar">
+      <div class="brand">✦ Star&nbsp;Explorer</div>
+      <div class="progress" id="progress">0 / 0 mapped</div>
+    </header>
+
+    <svg id="sky" viewBox="0 0 100 150" preserveAspectRatio="xMidYMid slice" aria-label="Night sky"></svg>
+
+    <div class="telescope" aria-hidden="true">
+      <div class="scope-tube"></div>
+      <div class="scope-mount"></div>
+      <div class="scope-tripod"></div>
+    </div>
+
+    <div class="hint" id="sky-hint">Tap a glowing star to point your telescope at it.</div>
+    <button id="reset-btn" class="ghost-btn" title="Start a new survey">↺ New survey</button>
+  </main>
+
+  <!-- ============ MEASURE SCREEN ============ -->
+  <section id="measure-screen" class="screen">
+    <header class="topbar">
+      <button id="back-btn" class="ghost-btn">‹ Back to sky</button>
+      <div class="star-name" id="star-name">Star</div>
+    </header>
+
+    <p class="instrument-label">Watch how the star's light shifts over time</p>
+    <canvas id="specview" width="700" height="220"></canvas>
+
+    <p class="instrument-label">…and the speed it reveals</p>
+    <canvas id="curve" width="700" height="190"></canvas>
+
+    <div id="classify" class="classify">
+      <p class="classify-prompt">Which picture matches what you see?</p>
+      <div class="classify-buttons">
+        <button class="class-btn" data-guess="rv">
+          <canvas class="mini" data-mini="rv" width="120" height="120"></canvas>
+          <span class="ctext">One star, steady speed<small>the fingerprint slides over and holds still</small></span>
+        </button>
+        <button class="class-btn" data-guess="planet">
+          <canvas class="mini" data-mini="planet" width="120" height="120"></canvas>
+          <span class="ctext">A star with a hidden planet<small>the fingerprint drifts gently back and forth</small></span>
+        </button>
+        <button class="class-btn" data-guess="binary">
+          <canvas class="mini" data-mini="binary" width="120" height="120"></canvas>
+          <span class="ctext">Two stars circling each other<small>the fingerprint splits in two, then re-joins</small></span>
+        </button>
+      </div>
+    </div>
+
+    <div id="result" class="result hidden"></div>
+  </section>
+
+  <!-- ============ INTRO OVERLAY ============ -->
+  <div id="intro" class="overlay">
+    <div class="overlay-card">
+      <div class="overlay-icon">🔭</div>
+      <h1>Star Explorer</h1>
+      <p class="lead">You're an astronomer tonight.</p>
+      <p>The stars look still — but their light hides how they move. Tap a star to
+      split its light into a <b>spectrum</b>, slide it to measure its motion, and
+      uncover drifting stars, <b>hidden planets</b> and <b>double stars</b>.</p>
+      <p class="quiet">Map the whole sky.</p>
+      <button id="intro-btn" class="primary-btn wide">Begin survey ›</button>
+    </div>
+  </div>
+
+  <!-- ============ COMPLETION OVERLAY ============ -->
+  <div id="done" class="overlay hidden">
+    <div class="overlay-card">
+      <div class="overlay-icon">✦</div>
+      <h1>Survey complete!</h1>
+      <p class="lead" id="done-summary"></p>
+      <p>You read the sky with the <b>Doppler effect</b> — the very same method real
+      astronomers use to discover planets around other stars.</p>
+      <button id="done-btn" class="primary-btn wide">Start a new survey ›</button>
+    </div>
+  </div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
