@@ -80,7 +80,7 @@ export class MeasureSession {
     ctx.font = "13px system-ui";
     ctx.textAlign = "left";
     ctx.fillStyle = "#e8ecff";
-    ctx.fillText("The star's light — faint marks = at rest, dark lines = now", PAD, stripTop - 14);
+    ctx.fillText("The star's light — faint marks = reference spectrum, dark lines = now", PAD, stripTop - 14);
   }
 
   _restMark(ctx, x, top, h) {
