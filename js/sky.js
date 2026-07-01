@@ -66,16 +66,28 @@ function annotation(star) {
   return g;
 }
 
+// Radial gradient that turns a flat disc into one soft glowing ball: a small
+// bright core, the star's colour through the body, fading to transparent.
+function glowGradient(star) {
+  const g = el("radialGradient", { id: `glow-${star.id}`, cx: "50%", cy: "50%", r: "50%" });
+  g.appendChild(el("stop", { offset: "0%",  "stop-color": "#ffffff",   "stop-opacity": "0.6" }));
+  g.appendChild(el("stop", { offset: "18%", "stop-color": star.color,  "stop-opacity": "1" }));
+  g.appendChild(el("stop", { offset: "50%", "stop-color": star.color,  "stop-opacity": "0.98" }));
+  g.appendChild(el("stop", { offset: "100%", "stop-color": star.color, "stop-opacity": "0" }));
+  return g;
+}
+
 export function renderSky(svg, onPick) {
   svg.innerHTML = "";
-  svg.appendChild(defs());
+  const defsNode = defs();
+  svg.appendChild(defsNode);
 
   // background field
   const bg = el("g");
   for (const s of BG) {
-    const c = el("circle", { cx: s.x.toFixed(2), cy: s.y.toFixed(2), r: s.r.toFixed(2), fill: "#aeb8ee" });
-    c.setAttribute("class", "star-glow");
-    c.style.animationDelay = `${s.d.toFixed(2)}s`;
+    // static (non-twinkling) field; brighter stars are a touch more opaque
+    const op = Math.min(0.8, 0.32 + s.r).toFixed(2);
+    const c = el("circle", { cx: s.x.toFixed(2), cy: s.y.toFixed(2), r: s.r.toFixed(2), fill: "#aeb8ee", opacity: op });
     bg.appendChild(c);
   }
   svg.appendChild(bg);
@@ -86,14 +98,15 @@ export function renderSky(svg, onPick) {
     g.setAttribute("role", "button");
     g.setAttribute("aria-label", `Observe ${star.name}`);
 
-    // soft halo
-    const halo = el("circle", { cx: star.x, cy: star.y, r: star.size * 1.8, fill: star.color, opacity: 0.18 });
-    halo.setAttribute("class", "star-glow");
-    g.appendChild(halo);
-    g.appendChild(el("circle", { cx: star.x, cy: star.y, r: star.size, fill: star.color }));
+    // one soft glowing ball
+    defsNode.appendChild(glowGradient(star));
+    g.appendChild(el("circle", {
+      cx: star.x, cy: star.y, r: star.size * 2.4,
+      fill: `url(#glow-${star.id})`, class: "star-ball",
+    }));
 
     if (isMapped(star.id)) {
-      g.appendChild(el("circle", { cx: star.x, cy: star.y, r: star.size * 2.4, class: "mapped-ring" }));
+      g.appendChild(el("circle", { cx: star.x, cy: star.y, r: star.size * 2.8, class: "mapped-ring" }));
       g.appendChild(annotation(star));
     }
 
