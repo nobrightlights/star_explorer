@@ -17,11 +17,50 @@
 
     <svg id="sky" viewBox="0 0 100 150" preserveAspectRatio="xMidYMid slice" aria-label="Night sky"></svg>
 
-    <div class="telescope" aria-hidden="true">
-      <div class="scope-tube"></div>
-      <div class="scope-mount"></div>
-      <div class="scope-tripod"></div>
-    </div>
+    <svg class="earth" viewBox="0 0 375 150" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+      <defs>
+        <radialGradient id="ocean" cx="50%" cy="16%" r="95%">
+          <stop offset="0%" stop-color="#5bb2ec" />
+          <stop offset="50%" stop-color="#2f86d0" />
+          <stop offset="100%" stop-color="#1a5292" />
+        </radialGradient>
+        <clipPath id="globe-clip"><circle cx="187.5" cy="820" r="790" /></clipPath>
+      </defs>
+      <circle cx="187.5" cy="820" r="790" fill="url(#ocean)" />
+      <g clip-path="url(#globe-clip)">
+        <g fill="#4fae4c">
+          <!-- three tall smooth landmasses spanning the whole cap, top to bottom -->
+          <path d="M-5 150 L-5 90 C15 66 45 56 80 62 C110 66 130 80 128 104 C126 128 100 140 70 146 C40 152 12 151 -5 150 Z" />
+          <path d="M150 150 C146 120 160 96 156 72 C154 54 172 46 192 50 C210 54 214 74 206 92 C216 116 200 140 186 150 Z" />
+          <path d="M240 150 C232 124 214 100 226 78 C236 58 268 52 300 56 C334 60 366 54 380 66 L380 150 Z" />
+        </g>
+      </g>
+      <circle cx="187.5" cy="820" r="790" fill="none" stroke="rgba(188,234,255,0.6)" stroke-width="2.5" />
+    </svg>
+    <svg class="scope" viewBox="0 0 100 132" aria-hidden="true">
+      <defs>
+        <linearGradient id="tubeGrad" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#9182c9" />
+          <stop offset="0.5" stop-color="#eae3fb" />
+          <stop offset="1" stop-color="#8877bf" />
+        </linearGradient>
+      </defs>
+      <!-- tripod (static) -->
+      <g stroke="#4a3a6b" stroke-width="5" stroke-linecap="round">
+        <line x1="50" y1="88" x2="27" y2="126" />
+        <line x1="50" y1="88" x2="73" y2="126" />
+        <line x1="50" y1="88" x2="50" y2="128" />
+      </g>
+      <!-- tube: pivots at the mount, points up + leans toward the target star -->
+      <g id="telescope">
+        <polygon points="41,86 59,86 55,15 45,15" fill="url(#tubeGrad)" />
+        <ellipse cx="50" cy="15" rx="6" ry="2.4" fill="#dfe8ff" stroke="#8f9fd6" stroke-width="1.4" />
+        <ellipse cx="50" cy="86" rx="10.5" ry="4" fill="#7b6cc0" />
+        <ellipse cx="50" cy="86" rx="5" ry="2" fill="#241f47" />
+      </g>
+      <!-- mount hub over the pivot -->
+      <circle cx="50" cy="88" r="7" fill="#5a4785" />
+    </svg>
 
     <div class="hint" id="sky-hint">Tap a glowing star to point your telescope at it.</div>
     <button id="reset-btn" class="ghost-btn" title="Start a new survey">↺ New survey</button>
@@ -34,27 +73,61 @@
       <div class="star-name" id="star-name">Star</div>
     </header>
 
-    <p class="instrument-label">Watch how the star's light shifts over time</p>
-    <canvas id="specview" width="700" height="220"></canvas>
+    <div class="measure-content">
+      <!-- Intro Card -->
+      <div id="intro-card" class="step-instruction visible">
+        <h2>Ready to observe?</h2>
+        <p>You're about to measure how this star's light shifts over time. This shift reveals the star's motion — and can expose hidden planets and companion stars.</p>
+        <p class="step-hint">Follow the three measurements and tell us what pattern you see.</p>
+        <button id="btn-start-measure" class="primary-btn wide">Start measurement ›</button>
+      </div>
 
-    <p class="instrument-label">…and the speed it reveals</p>
-    <canvas id="curve" width="700" height="190"></canvas>
+      <!-- Reference Spectrum Section -->
+      <div id="reference-section" class="measure-section">
+        <div class="step-instruction">
+          <h2><span class="step-num">1</span>The reference spectrum</h2>
+          <p>First, look at the star's light fingerprint at rest. The faint marks show where each spectral line sits normally.</p>
+          <p class="step-hint">Watch the dark lines — they're where the light is now.</p>
+        </div>
+        <p class="instrument-label">The star's light — faint marks = reference spectrum, dark lines = now</p>
+        <canvas id="specview" width="700" height="220"></canvas>
+        <button id="btn-next-curve" class="primary-btn wide">I see the shift ›</button>
+      </div>
 
-    <div id="classify" class="classify">
-      <p class="classify-prompt">Which picture matches what you see?</p>
-      <div class="classify-buttons">
-        <button class="class-btn" data-guess="rv">
-          <canvas class="mini" data-mini="rv" width="120" height="120"></canvas>
-          <span class="ctext">One star at steady speed</small></span>
-        </button>
-        <button class="class-btn" data-guess="planet">
-          <canvas class="mini" data-mini="planet" width="120" height="120"></canvas>
-          <span class="ctext">Star with a hidden exoplanet</small></span>
-        </button>
-        <button class="class-btn" data-guess="binary">
-          <canvas class="mini" data-mini="binary" width="120" height="120"></canvas>
-          <span class="ctext">Two stars circling each other</small></span>
-        </button>
+      <!-- Speed Curve Section -->
+      <div id="curve-section" class="measure-section">
+        <div class="step-instruction">
+          <h2><span class="step-num">2</span>The speed curve</h2>
+          <p>Now watch how the measured speed changes over time. The curve traces the star's motion as it moves toward us (dipping down) and away from us (going up).</p>
+          <p class="step-hint">Is the speed steady, gently wobbling, or wildly changing?</p>
+        </div>
+        <p class="instrument-label">Measured speed over time</p>
+        <canvas id="curve" width="700" height="190"></canvas>
+        <button id="btn-next-classify" class="primary-btn wide">Now I'll classify ›</button>
+      </div>
+
+      <!-- Classification Section -->
+      <div id="classify-section" class="measure-section">
+        <div class="step-instruction">
+          <h2><span class="step-num">3</span>What did you observe?</h2>
+          <p>Based on the spectrum shift and speed curve, which scenario best describes this star?</p>
+        </div>
+        <div id="classify" class="classify">
+          <div class="classify-buttons">
+            <button class="class-btn" data-guess="rv">
+              <canvas class="mini" data-mini="rv" width="120" height="120"></canvas>
+              <span class="ctext">One star at steady speed</small></span>
+            </button>
+            <button class="class-btn" data-guess="planet">
+              <canvas class="mini" data-mini="planet" width="120" height="120"></canvas>
+              <span class="ctext">Star with a hidden exoplanet</small></span>
+            </button>
+            <button class="class-btn" data-guess="binary">
+              <canvas class="mini" data-mini="binary" width="120" height="120"></canvas>
+              <span class="ctext">Two stars circling each other</small></span>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
 

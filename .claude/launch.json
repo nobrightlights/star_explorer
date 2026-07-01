@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "star-explorer",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "8023"],
+      "port": 8023
+    }
+  ]
+}
