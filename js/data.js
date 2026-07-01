@@ -16,7 +16,7 @@
 export const STARS = [
   {
     id: "vega-prime",
-    name: "Lyra-7",
+    name: "Twinkle",
     x: 22, y: 28, size: 1.9, color: "#cfe0ff",
     type: "rv",
     systemic: 0,
@@ -25,7 +25,7 @@ export const STARS = [
   },
   {
     id: "kepler-ish",
-    name: "Aquila-3",
+    name: "Sparky",
     x: 68, y: 22, size: 1.6, color: "#fff0d0",
     type: "planet",
     systemic: -12,
@@ -35,7 +35,7 @@ export const STARS = [
   },
   {
     id: "algol-ish",
-    name: "Perseus-9",
+    name: "Glimmer",
     x: 44, y: 52, size: 2.1, color: "#dfe8ff",
     type: "binary",
     systemic: 5,
@@ -46,7 +46,7 @@ export const STARS = [
   },
   {
     id: "cyg-binary",
-    name: "Cygnus-2",
+    name: "Fizz",
     x: 76, y: 64, size: 1.7, color: "#cfe9ff",
     type: "binary",
     systemic: -18,
@@ -57,7 +57,7 @@ export const STARS = [
   },
   {
     id: "drifter",
-    name: "Draco-5",
+    name: "Flicker",
     x: 20, y: 74, size: 1.5, color: "#ffd8c0",
     type: "rv",
     systemic: 0,
@@ -66,7 +66,7 @@ export const STARS = [
   },
   {
     id: "second-planet",
-    name: "Orion-8",
+    name: "Wink",
     x: 58, y: 92, size: 1.8, color: "#e6ecff",
     type: "planet",
     systemic: 20,
