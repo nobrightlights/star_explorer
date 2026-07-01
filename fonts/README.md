@@ -1,13 +1,16 @@
 # Fonts
 
-- **Titles / headers → Impact.** A system font on Windows and macOS, so nothing
-  is bundled for it.
+- **Titles / headers → Impact**, falling back to bundled **Anton** — a free
+  (SIL OFL) Impact look-alike. Impact ships with Windows and macOS but NOT
+  Android, so without Anton the titles collapse to a thin system sans on phones
+  (e.g. Samsung). Anton keeps them heavy and condensed on every device, offline.
 - **Body text → Saira Semi Condensed** (files in this folder), used as a free,
   open-licensed (SIL OFL) look-alike for Futura Condensed. It's bundled locally
   so the app renders the same on every machine, including an offline kiosk.
 
 ## Files
 
+- `anton-400.woff2` — display face for titles/headers (Impact look-alike)
 - `saira-semi-condensed-500.woff2` — medium weight (default body text)
 - `saira-semi-condensed-700.woff2` — bold weight (emphasis / strong text)
 

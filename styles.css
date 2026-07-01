@@ -29,11 +29,25 @@
   font-display: swap;
 }
 
+/* Display font: real Impact where installed (Windows/macOS), otherwise the
+   bundled Anton — a free (SIL OFL) Impact look-alike — so titles are heavy and
+   condensed on every device, including Android/Samsung, offline. */
+@font-face {
+  font-family: "AppDisplay";
+  src:
+    local("Impact"),
+    local("Haettenschweiler"),
+    url("fonts/anton-400.woff2") format("woff2");
+  font-weight: 400 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
-  /* backdrop — dark night sky, like the poster */
-  --bg: #070b1a;
-  --bg2: #0d1430;
-  --bg-deep: #03050e;
+  /* backdrop — dark but distinctly blue night sky */
+  --bg: #0d1f45;
+  --bg2: #14265a;
+  --bg-deep: #081530;
 
   /* cream panels + text that sits on them */
   --cream: #f8f3e3;
@@ -62,7 +76,7 @@
     #ffe23a 66%, #ff8a1f 83%, #ff3535 100%);
 
   /* type */
-  --font-display: "Impact", "Haettenschweiler", "Franklin Gothic Bold", "Arial Narrow Bold", sans-serif;
+  --font-display: "AppDisplay", "Impact", "Arial Narrow Bold", sans-serif;
   --font-cond: "AppCondensed", "Futura Condensed Medium", "Arial Narrow", "Segoe UI", sans-serif;
 
   /* crisp, lightly-softened corners */
@@ -73,7 +87,7 @@
 
   /* faint static 4-point sparkle field for the dark backdrop */
   --sparkles:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Cpath d='M44 28c2 14 5 17 19 19-14 2-17 5-19 19-2-14-5-17-19-19 14-2 17-5 19-19z' fill='%23ffffff' opacity='0.06'/%3E%3Cpath d='M150 108c1.4 9 3.3 11 12 12-8.7 1.4-10.6 3-12 12-1.4-9-3.3-11-12-12 8.7-1 10.6-3 12-12z' fill='%23ffffff' opacity='0.05'/%3E%3Cpath d='M104 166c1 6 2 7 8 8-6 1-7 2-8 8-1-6-2-7-8-8 6-1 7-2 8-8z' fill='%23ffffff' opacity='0.045'/%3E%3C/svg%3E");
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Cpath d='M44 28c2 14 5 17 19 19-14 2-17 5-19 19-2-14-5-17-19-19 14-2 17-5 19-19z' fill='%23ffffff' opacity='0.13'/%3E%3Cpath d='M150 108c1.4 9 3.3 11 12 12-8.7 1.4-10.6 3-12 12-1.4-9-3.3-11-12-12 8.7-1 10.6-3 12-12z' fill='%23ffffff' opacity='0.11'/%3E%3Cpath d='M104 166c1 6 2 7 8 8-6 1-7 2-8 8-1-6-2-7-8-8 6-1 7-2 8-8z' fill='%23ffffff' opacity='0.1'/%3E%3C/svg%3E");
 }
 
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -148,7 +162,7 @@ h1, h2, h3, .brand { font-family: var(--font-display); font-weight: 400; }
   position: relative;
   background:
     var(--sparkles),
-    radial-gradient(130% 85% at 50% -10%, #0f1738 0%, #0a1026 45%, #04060f 100%);
+    radial-gradient(130% 85% at 50% -10%, #1e3572 0%, #14285c 45%, #0b1c40 100%);
   height: 100vh;
   overflow: hidden;
 }
@@ -404,7 +418,7 @@ canvas {
   padding: 24px;
   background:
     var(--sparkles),
-    radial-gradient(130% 90% at 50% -10%, #0f1738 0%, #0a1026 50%, #04060e 100%);
+    radial-gradient(130% 90% at 50% -10%, #1e3572 0%, #14285c 50%, #0b1c40 100%);
   animation: fade-in 0.4s ease;
 }
 .overlay.hidden { display: none; }

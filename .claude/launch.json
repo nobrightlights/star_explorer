@@ -4,8 +4,8 @@
     {
       "name": "star-explorer",
       "runtimeExecutable": "python",
-      "runtimeArgs": ["-m", "http.server", "8023"],
-      "port": 8023
+      "runtimeArgs": ["-m", "http.server", "8025"],
+      "port": 8025
     }
   ]
 }
